@@ -87,6 +87,16 @@ public class GreetingController {
     {
         return  greetingService.addGreeting(userData);
     }
+
+    /**
+     * UC5 : Ability For The Greeting App To Find A Greeting Message By Id
+      In The Repository
+     * */
+    @GetMapping("/greetService/{id}")
+    public GreetingData greeting(@PathVariable long id) {
+        return  greetingService.getGreetingById(id);
+    }
+
 }
 
 

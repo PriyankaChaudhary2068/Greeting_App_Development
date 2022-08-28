@@ -22,13 +22,18 @@ public class GreetingService {
 
     public GreetingData getGreeting(UserData userData) {
         long id = counter.incrementAndGet();
-        GreetingData greeting = new GreetingData(id,userData.getFirstName()+" "+userData.getLastName());
+        GreetingData greeting = new GreetingData(id,"Hello "+userData.getFirstName()+" "+userData.getLastName());
         return greeting;
     }
     public GreetingData addGreeting(UserData userData){
-        String message =  userData.getFirstName() +" "+userData.getLastName();
+        String message = "Hello"+ userData.getFirstName() +" "+userData.getLastName();
         GreetingData greeting=new GreetingData(counter.incrementAndGet(),message);
         return greetingRepository.save(greeting);
+    }
+    public GreetingData getGreetingById(long id)
+    {
+        GreetingData greeting=greetingRepository.findById(id).get();
+        return greeting;
     }
 
 }
