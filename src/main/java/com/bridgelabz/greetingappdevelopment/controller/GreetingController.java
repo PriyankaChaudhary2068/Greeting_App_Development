@@ -1,11 +1,9 @@
 package com.bridgelabz.greetingappdevelopment.controller;
 
 import com.bridgelabz.greetingappdevelopment.model.GreetingData;
+import com.bridgelabz.greetingappdevelopment.model.UserData;
 import com.bridgelabz.greetingappdevelopment.service.GreetingService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -42,6 +40,38 @@ public class GreetingController {
     @GetMapping("/getMessage")
     public String getMessage() {
         return GreetingService.getMessage();
+    }
+
+
+    //localhost:8080/greeting
+    @PostMapping("/greeting")
+    public GreetingData getGreeting(@RequestBody UserData data) {
+        GreetingData greeting = new GreetingData(5, "Hi " + data.getFirstName() + ".This is POST");
+        return greeting;
+    }
+
+    //localhost:8080/greeting/hello
+    @PostMapping("/greeting/hello")
+    public GreetingData getGreetingHi(@RequestBody UserData data) {
+        return new GreetingData(counter.incrementAndGet(), String.format(template, data.getLastName()));
+    }
+
+    //localhost:8080/greeting/put?name=Priyanka
+    @PutMapping("/greeting/put")
+    public GreetingData putGreeting(@RequestParam(value = "name") String name) {
+        return new GreetingData(counter.incrementAndGet(), String.format(template, name));
+    }
+
+    @GetMapping("/greet")
+    public GreetingData greeting(@RequestParam(value = "FirstName", defaultValue = "") String fname,
+                                 @RequestParam(value = "LastName", defaultValue = "") String lname) {
+
+        UserData userData = new UserData();
+        userData.setFirstName(fname);
+        userData.setLastName(lname);
+
+        GreetingService greetingService = new GreetingService();
+        return greetingService.getGreeting(userData);
     }
 }
 
