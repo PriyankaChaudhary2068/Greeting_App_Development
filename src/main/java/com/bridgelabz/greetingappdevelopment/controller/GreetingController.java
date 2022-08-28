@@ -3,6 +3,7 @@ package com.bridgelabz.greetingappdevelopment.controller;
 import com.bridgelabz.greetingappdevelopment.model.GreetingData;
 import com.bridgelabz.greetingappdevelopment.model.UserData;
 import com.bridgelabz.greetingappdevelopment.service.GreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -12,6 +13,8 @@ public class GreetingController {
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
+    @Autowired
+    private GreetingService greetingService;
 
     /*
     UC1 : Using Greeting Controller Return JSON For Different HTTP Methods
@@ -72,6 +75,17 @@ public class GreetingController {
 
         GreetingService greetingService = new GreetingService();
         return greetingService.getGreeting(userData);
+    }
+
+    /**
+     * UC4 : Ability For The Greeting App To Save The Greeting Message
+     In The Repository
+     * */
+
+    @PostMapping("/greetService")
+    public GreetingData greeting(@RequestBody UserData userData)
+    {
+        return  greetingService.addGreeting(userData);
     }
 }
 
