@@ -1,6 +1,7 @@
 package com.bridgelabz.greetingappdevelopment.controller;
 
 import com.bridgelabz.greetingappdevelopment.model.GreetingData;
+import com.bridgelabz.greetingappdevelopment.service.GreetingService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,18 @@ public class GreetingController {
                 String.format(template, name));
 
     }
+
+     /*
+    UC2 : Extend GreetingController To Use Service Layer To Get
+    Simple Greeting Message "Hello World"
+    *localhost:8080/getMessage
+     */
+
+    @GetMapping("/getMessage")
+    public String getMessage() {
+        return GreetingService.getMessage();
+    }
 }
+
 
 
